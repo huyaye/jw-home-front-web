@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { getAuthDetails, deleteAuthDetails } from "../auth/AuthDetails";
-import KeycloakLogout from "../auth/KeycloakLogout";
+import { logoutOidcSession } from "../auth/OpenIdConnectService";
 
 const Profile = () => {
   const history = useHistory();
@@ -11,9 +11,9 @@ const Profile = () => {
     history.push("/");
   }
 
-  const onLogOutClick = () => {
+  const onLogOutClick = async () => {
     deleteAuthDetails();
-    KeycloakLogout(authDetails);
+    await logoutOidcSession(authDetails.refresh_token);
     history.push("/");
   };
 
@@ -23,7 +23,7 @@ const Profile = () => {
         <li>{authDetails.uid}</li>
         <li>{authDetails.name}</li>
         <li>{authDetails.email}</li>
-        <li>{authDetails.token}</li>
+        <li>{authDetails.access_token}</li>
       </ul>
       <button onClick={onLogOutClick}>Log Out</button>
     </div>
