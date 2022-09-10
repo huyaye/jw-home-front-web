@@ -6,7 +6,6 @@ import { logoutOidcSession } from "../auth/OpenIdConnectService";
 const Profile = () => {
   const history = useHistory();
   const authDetails = getAuthDetails();
-  console.log(authDetails);
   if (authDetails.uid == null) {
     history.push("/");
   }
